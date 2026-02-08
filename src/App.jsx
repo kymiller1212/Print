@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import SearchBar from './components/SearchBar';
 import ImageGrid from './components/ImageGrid';
 import PicksTray from './components/PicksTray';
 import PrintView from './components/PrintView';
 import DemoBanner from './components/DemoBanner';
+import { searchImages, isDemo } from './search';
 import './App.css';
 
 const MAX_PICKS_LIMIT = 8;
@@ -15,24 +16,14 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [showPrint, setShowPrint] = useState(false);
-  const [isDemo, setIsDemo] = useState(false);
   const [maxPerPage, setMaxPerPage] = useState(5);
-
-  useEffect(() => {
-    fetch('/api/status')
-      .then((r) => r.json())
-      .then((data) => setIsDemo(data.demo))
-      .catch(() => setIsDemo(true));
-  }, []);
 
   const handleSearch = useCallback(async (query) => {
     setLoading(true);
     setSearched(true);
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-      const data = await res.json();
-      setResults(data.items || []);
-      if (data.demo !== undefined) setIsDemo(data.demo);
+      const items = await searchImages(query);
+      setResults(items);
     } catch {
       setResults([]);
     }
@@ -76,7 +67,7 @@ function App() {
         <p className="app-subtitle">Find cool pictures and print them!</p>
       </header>
 
-      {isDemo && <DemoBanner />}
+      {isDemo() && <DemoBanner />}
 
       <SearchBar onSearch={handleSearch} loading={loading} />
 

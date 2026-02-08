@@ -3,7 +3,7 @@ import './DemoBanner.css';
 function DemoBanner() {
   return (
     <div className="demo-banner">
-      <strong>Demo Mode</strong> — Using placeholder images. Add your Google API keys to <code>.env</code> for real search results.
+      <strong>Demo Mode</strong> — Using placeholder images. Set your API keys in <code>src/config.js</code> for real search results.
     </div>
   );
 }
