@@ -16,15 +16,19 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [showPrint, setShowPrint] = useState(false);
+  const [error, setError] = useState('');
   const [maxPerPage, setMaxPerPage] = useState(5);
 
   const handleSearch = useCallback(async (query) => {
     setLoading(true);
     setSearched(true);
+    setError('');
     try {
       const items = await searchImages(query);
       setResults(items);
-    } catch {
+    } catch (err) {
+      console.error('Search failed:', err);
+      setError(err.message || 'Search failed');
       setResults([]);
     }
     setLoading(false);
@@ -92,6 +96,7 @@ function App() {
         {searched && !loading && results.length === 0 && (
           <div className="no-results">
             <p>No pictures found. Try a different search!</p>
+            {error && <p className="error-detail">{error}</p>}
           </div>
         )}
 

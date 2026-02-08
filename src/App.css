@@ -89,6 +89,16 @@
   color: #888;
 }
 
+.error-detail {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #d63031;
+  background: #ffeaea;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
 /* ===== Print Styles ===== */
 @media print {
   .app,

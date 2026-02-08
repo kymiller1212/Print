@@ -97,7 +97,7 @@ export async function searchImages(query) {
 
   // Prepend safety terms to bias toward product/official images
   const safeQuery = `official product photo ${query}`;
-  const url = `https://www.googleapis.com/customsearch/v1?key=${encodeURIComponent(GOOGLE_API_KEY)}&cx=${encodeURIComponent(GOOGLE_SEARCH_ENGINE_ID)}&q=${encodeURIComponent(safeQuery)}&searchType=image&safe=strict&num=16&imgType=photo`;
+  const url = `https://www.googleapis.com/customsearch/v1?key=${encodeURIComponent(GOOGLE_API_KEY)}&cx=${encodeURIComponent(GOOGLE_SEARCH_ENGINE_ID)}&q=${encodeURIComponent(safeQuery)}&searchType=image&safe=strict&num=10&imgType=photo`;
 
   const response = await fetch(url);
   const data = await response.json();
